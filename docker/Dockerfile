@@ -1,8 +1,6 @@
 # Build container
 FROM erlang:23.0.3-alpine as builder
 RUN apk add --no-cache snappy-dev openssl-dev alpine-sdk bsd-compat-headers bash
-RUN mkdir -p /vernemq/plugins
-COPY --chown=10000:10000 /apps/vmq_enhanced_auth_compiled /vernemq/plugins/vmq_enhanced_auth
 WORKDIR /builder
 COPY . /builder
 RUN make rel
@@ -23,7 +21,6 @@ ENV DOCKER_VERNEMQ_KUBERNETES_LABEL_SELECTOR="app=vernemq" \
 
 WORKDIR /vernemq
 
-#COPY --chown=10000:10000 --from=builder ../apps/vmq_enhanced_auth_compiled /vernemq/plugins/vmq_enhanced_auth
 COPY --chown=10000:10000 --from=builder /builder/_build/default/rel/vernemq /vernemq
 COPY --chown=10000:10000 docker/bin/vernemq.sh /usr/sbin/start_vernemq
 COPY --chown=10000:10000 docker/files/vm.args /vernemq/etc/vm.args
