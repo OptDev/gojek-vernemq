@@ -25,6 +25,6 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push
         run: |
-          docker build -t OptDev/gojek-vernemq:latest -t OptDev/gojek-vernemq:${{ steps.get_version.outputs.version }} -f docker/Dockerfile .
+          docker build -t optuma/gojek-vernemq:latest -t optuma/gojek-vernemq:${{ steps.get_version.outputs.version }} -f docker/Dockerfile .
           docker push optuma/gojek-vernemq:latest
           docker push optuma/gojek-vernemq:${{ steps.get_version.outputs.version }}
