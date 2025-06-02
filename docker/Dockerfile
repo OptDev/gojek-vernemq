@@ -1,6 +1,10 @@
 # Build container
 FROM erlang:23.0.3-alpine as builder
 RUN apk add --no-cache snappy-dev openssl-dev alpine-sdk bsd-compat-headers bash
+
+RUN mkdir -p /vernemq/plugins
+COPY --chown=10000:10000 /apps/_build/default/lib/vmq_enhanced_auth /vernemq/plugins
+
 WORKDIR /builder
 COPY . /builder
 RUN make rel
@@ -21,6 +25,9 @@ ENV DOCKER_VERNEMQ_KUBERNETES_LABEL_SELECTOR="app=vernemq" \
 
 WORKDIR /vernemq
 
+RUN mkdir -p /vernemq/plugins
+
+COPY --chown=10000:10000 --from=builder /apps/_build/default/lib/vmq_enhanced_auth /vernemq/plugins
 COPY --chown=10000:10000 --from=builder /builder/_build/default/rel/vernemq /vernemq
 COPY --chown=10000:10000 docker/bin/vernemq.sh /usr/sbin/start_vernemq
 COPY --chown=10000:10000 docker/files/vm.args /vernemq/etc/vm.args
@@ -40,7 +47,7 @@ RUN chown -R 10000:10000 /vernemq && \
 # 9100 9101 9102 9103 9104 9105 9106 9107 9108 9109  Specific Distributed Erlang Port Range
 
 EXPOSE 1883 8883 8080 44053 4369 8888 \
-       9100 9101 9102 9103 9104 9105 9106 9107 9108 9109
+    9100 9101 9102 9103 9104 9105 9106 9107 9108 9109
 
 VOLUME ["/vernemq/log", "/vernemq/data", "/vernemq/etc"]
 
