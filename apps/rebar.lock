@@ -30,10 +30,10 @@
        {ref,"4013b6235ac0c1a3a32193ba3c46eebdde0c2fa2"}},
   0},
  {<<"vmq_enhanced_auth">>,
-  {path,"vmq_enhanced_auth",{mtime,<<"2025-06-02T07:29:39Z">>}},
+  {path,"vmq_enhanced_auth",{mtime,<<"2025-06-02T08:13:53Z">>}},
   0},
  {<<"vmq_events_sidecar">>,
-  {path,"vmq_events_sidecar",{mtime,<<"2025-06-02T07:29:39Z">>}},
+  {path,"vmq_events_sidecar",{mtime,<<"2025-06-02T08:13:53Z">>}},
   0}]}.
 [
 {pkg_hash,[
